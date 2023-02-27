@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>La mia Pizzeria</title>
+	<th:block th:replace="~{fragments :: head}"></th:block>
+</head>
+
+<body class="container pt-4">
+	<div>
+		<form method="GET" action="/pizza">
+			<label for="keyword">Ricerca la tua pizza:</label>
+			<input type="text" id="keyword" name="keyword">
+			<input class="btn btn-primary" type="submit" value="Invia">
+		</form>
+		<a class="btn btn-primary m-3" th:href="@{/create}"
+			th:classAppend="${pagina=='create'}? active : not-active">Crea la tua pizza
+		</a>
+		<a th:href="@{/ingredienti}">
+			Ingredienti
+		</a>
+	</div>
+	<div>
+		<ul>
+			<li th:each="pizza : ${pizze}">
+				<a th:href="@{/details/{id}(id=${pizza.id})}" th:text="${pizza.name}"></a>
+				<div><img class="my-3" th:src="${pizza.img}" /></div>
+				<div>Descrizione pizza: <span th:text="${pizza.description}"></span></div>
+				<div>Prezzo: <span th:text="${pizza.price}"></span> €</div>
+				</a>
+
+				<a class="btn btn-warning my-2" th:href="@{'/edit/{id}'(id=${pizza.id})}"> Modifica</a>
+				<form action="#" th:action="@{'/delete/{id}'(id=${pizza.id})}" method="post">
+					<button class="mb-3 btn btn-danger" type="submit" id="submitButton">
+						Elimina
+					</button>
+				</form>
+				<hr>
+			</li>
+		</ul>
+	</div>
+
+</body>
+
+</html>

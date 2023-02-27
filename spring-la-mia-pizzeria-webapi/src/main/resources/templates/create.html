@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<th:block th:replace="~{fragments :: head}"></th:block>
+</head>
+
+<body class="container">
+	<form class="p-2" id="pizza-form" th:object="${pizza}" th:action="@{/create}" method="post">
+		<ul>
+			<li th:each="err : ${#fields.allErrors()}" th:text="${err}" class="text-danger">
+			</li>
+		</ul>
+		<label for="name" class="form-label">Nome</label>
+		<input type="text" class="form-control" id="name" th:field="*{name}">
+
+		<label for="description" class="form-label">Descrivi la pizza</label>
+		<input type="text" class="form-control" id="description" th:field="*{description}">
+
+		<label for="img" class="form-label">Inserisci una foto</label>
+		<input type="text" class="form-control" id="img" th:field="*{img}">
+
+		<label for="price" class="form-label">Prezzo:</label>
+		<input type="number" min="0" max="60" class="form-control" id="price" th:field="*{price}">
+
+		<div th:each="ing : ${ingredienti}">
+			<input type="checkbox" th:value="${ing.id}" th:field="*{ingredienti}"> <label th:text="${ing.name}"></label>
+		</div>
+
+		<button class="mt-1" type="submit">Salva</button>
+	</form>
+	<a class="btn btn-secondary m-2" th:href="@{/}" th:classAppend="${pagina=='index'}? active : not-active"> Torna
+		indietro
+	</a>
+</body>
+
+</html>
